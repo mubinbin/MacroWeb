@@ -1,0 +1,32 @@
+@{
+    Layout = "_Layout";
+}
+@model MacroWeb.Models.MyContext
+
+@{
+    List<Message> allmessages = Model.Messages
+            .Include(m=>m.CommentsForMessage)
+            .Include(m=>m.Creator)
+            .OrderByDescending(m=>m.UpdatedAt)
+            .ToList();
+}
+<a class="btn btn-success btn-sm text-white" onclick="showModal('/newmessagepartial', 'New Message')"><i class="fa fa-plus"></i> New Message</a>
+
+@{
+    if(ViewBag.curuser.ImagePath == null)
+    {
+        <img src="~/images/profile1.png" alt="">
+
+    }else{
+        <img src="@ViewBag.curuser.ImagePath" alt="">
+    }
+}
+
+
+@* <partial name="_Modal"/>
+
+<div style="padding-top:30px; height: 80%; overflow: auto;" id="show-message">
+    <partial name="_ShowMessage" model="allmessages"/>
+
+</div> *@
+
