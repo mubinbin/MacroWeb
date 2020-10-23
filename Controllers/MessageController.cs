@@ -354,7 +354,6 @@ namespace MacroWeb.Controllers
         [HttpPost("processspiral")]
         public IActionResult ProcessSpiral(string SpiralContent, int UserId, int CenterId, bool IsSpiral)
         {
-            Console.WriteLine(SpiralContent);
             int userid = (int)HttpContext.Session.GetInt32("UserId");
 
             ViewBag.curuser = _context.Users
