@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MacroWeb.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20201021044704_InitialMigrations")]
-    partial class InitialMigrations
+    [Migration("20201023020026_initialmigration")]
+    partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -124,6 +124,9 @@ namespace MacroWeb.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int?>("CenterId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -142,30 +145,11 @@ namespace MacroWeb.Migrations
 
                     b.HasKey("MessageId");
 
+                    b.HasIndex("CenterId");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Messages");
-                });
-
-            modelBuilder.Entity("MacroWeb.Models.Retweet", b =>
-                {
-                    b.Property<int>("RetweetId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("MessageId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RetweetId");
-
-                    b.HasIndex("MessageId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Retweets");
                 });
 
             modelBuilder.Entity("MacroWeb.Models.User", b =>
@@ -267,23 +251,12 @@ namespace MacroWeb.Migrations
 
             modelBuilder.Entity("MacroWeb.Models.Message", b =>
                 {
+                    b.HasOne("MacroWeb.Models.Message", "Center")
+                        .WithMany("Spirals")
+                        .HasForeignKey("CenterId");
+
                     b.HasOne("MacroWeb.Models.User", "Creator")
                         .WithMany("PostMessages")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MacroWeb.Models.Retweet", b =>
-                {
-                    b.HasOne("MacroWeb.Models.Message", "RetweetedMessage")
-                        .WithMany("UsersRetweeted")
-                        .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("MacroWeb.Models.User", "UserRetweet")
-                        .WithMany("RetweetedMessages")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

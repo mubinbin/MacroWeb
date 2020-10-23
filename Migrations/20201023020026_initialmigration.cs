@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MacroWeb.Migrations
 {
-    public partial class InitialMigrations : Migration
+    public partial class initialmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -62,11 +62,18 @@ namespace MacroWeb.Migrations
                     IsRetweet = table.Column<bool>(nullable: false),
                     MessageContent = table.Column<string>(nullable: false),
                     CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: false)
+                    UpdatedAt = table.Column<DateTime>(nullable: false),
+                    CenterId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Messages", x => x.MessageId);
+                    table.ForeignKey(
+                        name: "FK_Messages_Messages_CenterId",
+                        column: x => x.CenterId,
+                        principalTable: "Messages",
+                        principalColumn: "MessageId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Messages_Users_UserId",
                         column: x => x.UserId,
@@ -124,32 +131,6 @@ namespace MacroWeb.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LikedMessages_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Retweets",
-                columns: table => new
-                {
-                    RetweetId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<int>(nullable: false),
-                    MessageId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Retweets", x => x.RetweetId);
-                    table.ForeignKey(
-                        name: "FK_Retweets_Messages_MessageId",
-                        column: x => x.MessageId,
-                        principalTable: "Messages",
-                        principalColumn: "MessageId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Retweets_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
@@ -235,18 +216,13 @@ namespace MacroWeb.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Messages_CenterId",
+                table: "Messages",
+                column: "CenterId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Messages_UserId",
                 table: "Messages",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Retweets_MessageId",
-                table: "Retweets",
-                column: "MessageId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Retweets_UserId",
-                table: "Retweets",
                 column: "UserId");
         }
 
@@ -260,9 +236,6 @@ namespace MacroWeb.Migrations
 
             migrationBuilder.DropTable(
                 name: "LikedMessages");
-
-            migrationBuilder.DropTable(
-                name: "Retweets");
 
             migrationBuilder.DropTable(
                 name: "Comments");

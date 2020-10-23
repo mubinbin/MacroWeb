@@ -61,3 +61,14 @@ D:\Dojo_Assignments\C#\ORM\MacroWeb\obj\Debug\netcoreapp3.1\staticwebassets\Macr
 D:\Dojo_Assignments\C#\ORM\MacroWeb\obj\Debug\netcoreapp3.1\MacroWeb.dll
 D:\Dojo_Assignments\C#\ORM\MacroWeb\obj\Debug\netcoreapp3.1\MacroWeb.pdb
 D:\Dojo_Assignments\C#\ORM\MacroWeb\obj\Debug\netcoreapp3.1\MacroWeb.genruntimeconfig.cache
+D:\Dojo_Assignments\C#\ORM\MacroWeb\obj\Debug\netcoreapp3.1\Razor\Views\Home\UserDetail.cshtml.g.cs
+D:\Dojo_Assignments\C#\ORM\MacroWeb\obj\Debug\netcoreapp3.1\Razor\Views\Message\_PostMessage.cshtml.g.cs
+D:\Dojo_Assignments\C#\ORM\MacroWeb\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ShowMessage.cshtml.g.cs
+D:\Dojo_Assignments\C#\ORM\MacroWeb\obj\Debug\netcoreapp3.1\Razor\Views\Message\_EditMessage.cshtml.g.cs
+D:\Dojo_Assignments\C#\ORM\MacroWeb\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_DeleteComment.cshtml.g.cs
+D:\Dojo_Assignments\C#\ORM\MacroWeb\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_DeleteMessage.cshtml.g.cs
+D:\Dojo_Assignments\C#\ORM\MacroWeb\obj\Debug\netcoreapp3.1\Razor\Views\Comment\_PostComment.cshtml.g.cs
+D:\Dojo_Assignments\C#\ORM\MacroWeb\obj\Debug\netcoreapp3.1\Razor\Views\Comment\_LikedCommentUsers.cshtml.g.cs
+D:\Dojo_Assignments\C#\ORM\MacroWeb\obj\Debug\netcoreapp3.1\Razor\Views\Message\_LikedMessageUsers.cshtml.g.cs
+D:\Dojo_Assignments\C#\ORM\MacroWeb\obj\Debug\netcoreapp3.1\Razor\Views\Home\_Follow.cshtml.g.cs
+D:\Dojo_Assignments\C#\ORM\MacroWeb\obj\Debug\netcoreapp3.1\Razor\Views\Home\_EditProfile.cshtml.g.cs

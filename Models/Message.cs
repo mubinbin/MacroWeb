@@ -32,8 +32,13 @@ namespace MacroWeb.Models
         // many to many users (like)
         public List<LikedMessage> UsersLikedThisMessage {get; set;}
 
-        // many to many users (retweet)
-        public List<Retweet> UsersRetweeted {get; set;}
+        // one to many self retweet
+        public int? CenterId {get; set;}
+
+        [ForeignKey("CenterId")]
+        public virtual Message Center {get; set;}
+
+        public virtual List<Message> Spirals {get; set;}
 
         [NotMapped]
         [BindProperty]

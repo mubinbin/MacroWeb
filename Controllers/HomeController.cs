@@ -40,26 +40,15 @@ namespace MacroWeb.Controllers
                     ModelState.AddModelError("Email", "This email has already been registered!");
                     return View("Index");
                 }
-                // Console.WriteLine(NewUser);
                 if(ImageFile != null)
                 {
                     //Save image to wwwroot/image
                     string wwwRootPath = _hostEnvironment.WebRootPath;
-                    Console.WriteLine(wwwRootPath);
-                    Console.WriteLine(" ");
                     string fileName = Path.GetFileNameWithoutExtension(ImageFile.FileName);
-                    Console.WriteLine(fileName);
-                    Console.WriteLine(" ");
                     string extension = Path.GetExtension(ImageFile.FileName);
-                    Console.WriteLine(extension);
-                    Console.WriteLine(" ");
                     
                     fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
-                    Console.WriteLine(fileName);
-                    Console.WriteLine(" ");
                     var filePath = Path.Combine(wwwRootPath + "/images/User", fileName);
-                    Console.WriteLine(filePath);
-                    Console.WriteLine(" ");
                     using (var fileStream = new FileStream(filePath, FileMode.Create))
                     {
                         ImageFile.CopyTo(fileStream);
@@ -92,6 +81,7 @@ namespace MacroWeb.Controllers
             if(ModelState.IsValid)
             {
                 User UserInDb = _context.Users.FirstOrDefault(u=>u.Email == CurUser.LEmail);
+                
 
                 // check if the email exsit in DB
                 if(UserInDb == null)
@@ -131,12 +121,18 @@ namespace MacroWeb.Controllers
             {
                 int userid = (int)HttpContext.Session.GetInt32("UserId");
                 ViewBag.curuser = _context.Users
+                .Include(u=>u.UsersFollowed)
+                .ThenInclude(c=>c.UserFollowed)
                 .FirstOrDefault(u=>u.UserId == userid);
+
+                ViewBag.allusers = _context.Users.ToList();
 
                 List<Message> allmessages = _context.Messages
                 .Include(m=>m.CommentsForMessage)
                 .ThenInclude(c=>c.Creator)
                 .Include(m=>m.Creator)
+                .Include(m=>m.UsersLikedThisMessage)
+                .ThenInclude(l=>l.UserWhoLiked)
                 .OrderByDescending(m=>m.UpdatedAt)
                 .ToList();
 
@@ -146,11 +142,141 @@ namespace MacroWeb.Controllers
             }
         }
 
+        [HttpGet("userdetail/{id}")]
+        public IActionResult UserDetail(int id)
+        {
+            if(HttpContext.Session.GetInt32("UserId")!=null)
+            {
+                int userid = (int)HttpContext.Session.GetInt32("UserId");
+                ViewBag.curuser = _context.Users
+                .Include(u=>u.UsersFollowed)
+                .ThenInclude(c=>c.UserFollowed)
+                .FirstOrDefault(u=>u.UserId == userid);
 
+                ViewBag.UserToView = _context.Users
+                .Include(u=>u.Followers)
+                .ThenInclude(c=>c.Follower)
+                .Include(u=>u.UsersFollowed)
+                .ThenInclude(c=>c.UserFollowed)
+                .Include(u=>u.PostMessages)
+                .Include(u=>u.LikedMessages)
+                .ThenInclude(l=>l.ThisLikedMessage)
+                .FirstOrDefault(u=>u.UserId==id);
 
+                return View("UserDetail");
+            }else{
+                return RedirectToAction("Index");
+            }
+        }
 
+        // follow
+        [ValidateAntiForgeryToken]
+        [HttpPost("follow")]
+        public RedirectToActionResult Follow(Connection NewConnection)
+        {
+            int userid = (int)HttpContext.Session.GetInt32("UserId");
 
+            ViewBag.curuser = _context.Users
+            .Include(u=>u.UsersFollowed)
+            .ThenInclude(c=>c.UserFollowed)
+            .FirstOrDefault(u=>u.UserId == userid);
 
+            ViewBag.UserToView = _context.Users
+            .Include(u=>u.Followers)
+            .ThenInclude(c=>c.Follower)
+            .Include(u=>u.UsersFollowed)
+            .ThenInclude(c=>c.UserFollowed)
+            .Include(u=>u.PostMessages)
+            .Include(u=>u.LikedMessages)
+            .ThenInclude(l=>l.ThisLikedMessage)
+            .FirstOrDefault(u=>u.UserId==NewConnection.UserFollowedId);
+
+            _context.Connections.Add(NewConnection);
+            _context.SaveChanges();
+
+            return RedirectToAction("UserDetail", new{id=NewConnection.UserFollowedId});
+        }
+
+        // unfollow
+        [ValidateAntiForgeryToken]
+        [HttpPost("unfollow")]
+        public RedirectToActionResult Unfollow(int UserFollowedId, int FollowerId)
+        {
+            int userid = (int)HttpContext.Session.GetInt32("UserId");
+
+            ViewBag.curuser = _context.Users
+            .Include(u=>u.UsersFollowed)
+            .ThenInclude(c=>c.UserFollowed)
+            .FirstOrDefault(u=>u.UserId == userid);
+
+            ViewBag.UserToView = _context.Users
+            .Include(u=>u.Followers)
+            .ThenInclude(c=>c.Follower)
+            .Include(u=>u.UsersFollowed)
+            .ThenInclude(c=>c.UserFollowed)
+            .Include(u=>u.PostMessages)
+            .Include(u=>u.LikedMessages)
+            .ThenInclude(l=>l.ThisLikedMessage)
+            .FirstOrDefault(u=>u.UserId==UserFollowedId);
+
+            Connection ToDelete = _context.Connections
+            .FirstOrDefault(c=>c.UserFollowedId==UserFollowedId && c.FollowerId==FollowerId);
+
+            _context.Connections.Remove(ToDelete);
+            _context.SaveChanges();
+
+            return RedirectToAction("UserDetail", new{id=UserFollowedId});
+        }
+
+        [HttpGet("editprofile")]
+        public IActionResult EditProfile(int id)
+        {
+            if(HttpContext.Session.GetInt32("UserId")!=null)
+            {
+                int userid = (int)HttpContext.Session.GetInt32("UserId");
+
+                return PartialView("_EditProfile");
+            }else{
+                return RedirectToAction("Index");
+            }
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost("processeditprofile")]
+        public IActionResult ProcssEdit(string Name, IFormFile ImageFile)
+        {
+            if(ModelState.IsValid)
+            {
+                int userid = (int)HttpContext.Session.GetInt32("UserId");
+                User curuser = _context.Users
+                .FirstOrDefault(u=>u.UserId == userid);
+
+                curuser.Name = Name;
+
+                if(ImageFile != null)
+                {
+                    //Save image to wwwroot/image
+                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string fileName = Path.GetFileNameWithoutExtension(ImageFile.FileName);
+                    string extension = Path.GetExtension(ImageFile.FileName);
+                    
+                    fileName = fileName + DateTime.Now.ToString("yymmssfff") + extension;
+                    var filePath = Path.Combine(wwwRootPath + "/images/User", fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        ImageFile.CopyTo(fileStream);
+                    }
+
+                    curuser.ImagePath = "/images/User/" + fileName;
+                }
+                _context.SaveChanges();
+                return RedirectToAction("UserDetail", new{id=userid});
+            }else
+            {
+                return View("_EditProfile");
+            }
+            
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -1,0 +1,20 @@
+@{
+    Layout = null;
+}
+@model MacroWeb.Models.User
+<form method="POST" asp-controller="Home" asp-action="ProcssEdit" enctype="multipart/form-data" onsubmit="return follow(this);">
+
+    <div class="form-group">
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+        <label style="display: block;" asp-for="ImageFile"></label>
+        <input asp-for="ImageFile" accept="image/*" />
+    </div>
+
+    <div class="form-group">
+        <p><span class="text-danger" asp-validation-for="Name"></span></p>
+        <label asp-for="Name"></label>
+        <input class="form-control" asp-for="Name">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Edit</button>
+</form>

@@ -1,0 +1,7 @@
+@model MacroWeb.Models.Message
+
+<form method="POST" asp-action="DelMes" class="d-inline" asp-controller="Message" onsubmit="return del(this, 'message');">
+    <input asp-for="MessageId" type="hidden" value="@Model.MessageId">
+    <button title="Delete Message" style="outline:none; border: none; background-color: transparent;" type="submit" class="col text-danger"  ><i style="cursor: pointer;" class="fas fa-trash-alt"></i></button>
+
+</form>

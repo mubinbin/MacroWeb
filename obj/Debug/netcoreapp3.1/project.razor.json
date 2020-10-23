@@ -14402,8 +14402,28 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Comment\\_PostComment.cshtml",
+      "TargetPath": "Views\\Comment\\_PostComment.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Home\\_EditProfile.cshtml",
+      "TargetPath": "Views\\Home\\_EditProfile.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Shared\\_DeleteMessage.cshtml",
+      "TargetPath": "Views\\Shared\\_DeleteMessage.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Shared\\_Modal.cshtml",
       "TargetPath": "Views\\Shared\\_Modal.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Home\\UserDetail.cshtml",
+      "TargetPath": "Views\\Home\\UserDetail.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -14412,8 +14432,18 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Message\\_EditMessage.cshtml",
+      "TargetPath": "Views\\Message\\_EditMessage.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Shared\\_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Message\\_LikedMessageUsers.cshtml",
+      "TargetPath": "Views\\Message\\_LikedMessageUsers.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -14432,13 +14462,38 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Shared\\_DeleteComment.cshtml",
+      "TargetPath": "Views\\Shared\\_DeleteComment.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Shared\\_LayoutReg.cshtml",
       "TargetPath": "Views\\Shared\\_LayoutReg.cshtml",
       "FileKind": "mvc"
     },
     {
+      "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Comment\\_LikedCommentUsers.cshtml",
+      "TargetPath": "Views\\Comment\\_LikedCommentUsers.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Message\\_PostMessage.cshtml",
+      "TargetPath": "Views\\Message\\_PostMessage.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Shared\\_ShowMessage.cshtml",
+      "TargetPath": "Views\\Shared\\_ShowMessage.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\_ViewImports.cshtml",
       "TargetPath": "Views\\_ViewImports.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Home\\_Follow.cshtml",
+      "TargetPath": "Views\\Home\\_Follow.cshtml",
       "FileKind": "mvc"
     }
   ],

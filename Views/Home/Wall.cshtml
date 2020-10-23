@@ -6,27 +6,26 @@
 @{
     List<Message> allmessages = Model.Messages
             .Include(m=>m.CommentsForMessage)
+            .ThenInclude(c=>c.Creator)
+
+            .Include(m=>m.CommentsForMessage)
+            .ThenInclude(c=>c.UserLikedThisComment)
+            .ThenInclude(lc=>lc.UserWhoLiked)
+
             .Include(m=>m.Creator)
+            .Include(m=>m.UsersLikedThisMessage)
+            .ThenInclude(lm=>lm.UserWhoLiked)
+            
             .OrderByDescending(m=>m.UpdatedAt)
             .ToList();
 }
-<a class="btn btn-success btn-sm text-white" onclick="showModal('/newmessagepartial', 'New Message')"><i class="fa fa-plus"></i> New Message</a>
-
-@{
-    if(ViewBag.curuser.ImagePath == null)
-    {
-        <img src="~/images/profile1.png" alt="">
-
-    }else{
-        <img src="@ViewBag.curuser.ImagePath" alt="">
-    }
-}
+<a style="position:fixed; bottom:100px; right: 100px; " class="btn btn-success btn-sm text-white" onclick="showModal('/newmessagepartial', 'New Message')"><i class="fa fa-plus"></i> New Message</a>
 
 
-@* <partial name="_Modal"/>
 
 <div style="padding-top:30px; height: 80%; overflow: auto;" id="show-message">
     <partial name="_ShowMessage" model="allmessages"/>
 
-</div> *@
+</div>
 
+<partial name="_Modal"/>

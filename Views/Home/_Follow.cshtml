@@ -1,0 +1,24 @@
+@model Connection
+@{
+    User CurUser = ViewBag.curuser;
+    if(!CurUser.UsersFollowed.Any(c=>c.UserFollowed == ViewBag.UserToView) && CurUser!=ViewBag.UserToView)
+    {
+        <form method="POST" asp-controller="Home" asp-action="Follow" onsubmit="return follow(this);">
+
+            <input type="hidden" asp-for="UserFollowedId" value="@ViewBag.UserToView.UserId">
+            <input type="hidden" asp-for="FollowerId" value="@CurUser.UserId">
+
+            <button style="outline:none; border: none; background-color: transparent; font-size: 1.5rem;" type="submit" class="col-sm-1 text-dark"  ><i title="Follow" style="cursor: pointer;" class="far fa-meh"></i></button>
+        </form>
+
+    }else if(CurUser.UsersFollowed.Any(c=>c.UserFollowed == ViewBag.UserToView) && CurUser!=ViewBag.UserToView){
+
+        <form method="POST" asp-controller="Home" asp-action="Unfollow" onsubmit="return follow(this);">
+
+            <input type="hidden" name="UserFollowedId" for="UserFollowedId" value="@ViewBag.UserToView.UserId">
+            <input type="hidden" name="FollowerId" for="FollowerId" value="@CurUser.UserId">
+
+            <button  style="outline:none; border: none; background-color: transparent; font-size: 1.5rem;" type="submit" class="col-sm-1 text-success"  ><i title="Unfollow" style="cursor: pointer;" class="far fa-smile-beam"></i></button>
+        </form>
+    }
+}

@@ -1,0 +1,14 @@
+@{
+    Layout = null;
+}
+
+<div style="height: 100%; overflow: auto;">
+@{
+    foreach(LikedMessage lm in ViewBag.ThisMessage.UsersLikedThisMessage)
+    {
+        <div style="margin:0 15px 0 15px;">
+            <a style="font-size:1.4rem;" onclick="showModal('/userdetail/@lm.UserWhoLiked.UserId', '@lm.UserWhoLiked.Name')"><i style="cursor: pointer;" title="Profile" class="text-dark fas fa-user"></i> @lm.UserWhoLiked.Name</a>
+        </div>
+    }
+}
+</div>

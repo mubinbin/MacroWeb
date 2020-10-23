@@ -50,8 +50,6 @@ namespace MacroWeb.Models
         public List<LikedMessage> LikedMessages {get; set;}
         public List<LikedComment> LikedComments {get; set;}
 
-        // many to many message (retweet)
-        public List<Retweet> RetweetedMessages {get; set;}
         
 
     }

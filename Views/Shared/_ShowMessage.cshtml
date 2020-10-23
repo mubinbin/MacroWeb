@@ -1,0 +1,76 @@
+@model List<Message>
+@{      
+    User CurUser = ViewBag.curuser;
+    foreach(Message m in Model)
+    {   
+        if(CurUser.UsersFollowed.Any(u=>u.UserFollowed==m.Creator) ||CurUser == m.Creator)
+        {
+
+            <div class="pl-3 font-weight-bold">
+                <a class="text-primary" style="cursor: pointer;" onclick="showModal('/userdetail/@m.Creator.UserId', '@m.Creator.Name')">@m.Creator.Name</a> - <span class="text-secondary">@m.UpdatedAt</span>
+            </div>
+            <div class="pl-3 py-2">@m.MessageContent</div>
+            <div class="my-4 row col-sm-3">
+                <span class="col">
+                @{
+                    if(m.UsersLikedThisMessage.Any(l=>l.UserWhoLiked==ViewBag.curuser))
+                    {
+                            <a class="text-danger" style="cursor: pointer;" onclick="likeorunlike('unlikemessage/@m.MessageId')"><i title="Unlike" class="fas fa-thumbs-up"></i> </a>
+                    }else{
+                            <a class="text-secondary" style="cursor: pointer;" onclick="likeorunlike('likemessage/@m.MessageId')"><i title="Like" class="far fa-thumbs-up"></i> </a>
+                    }
+                }
+                    <a style="cursor:pointer; text-decoration: none;" class="text-dark" onclick="showModal('/userslikedmessage/@m.MessageId', 'Users like this message')">@m.UsersLikedThisMessage.Count</a>
+                </span>
+
+
+
+                <a id="new-comment" class="col text-success" onclick="showModal('/newcommentpartial/@m.MessageId', 'New Comment')"><i style="cursor: pointer;" title="Reply" class="fa fa-comment"></i></a>
+                @{
+                    if(m.Creator == ViewBag.curuser)
+                    {
+                        <a id="edit-message" class="col text-info" onclick="showModal('/editmessagepartial/@m.MessageId', 'Edit Message')"><i style="cursor: pointer;" title="Edit Message" class="fas fa-pencil-alt"></i></a>
+
+                        <partial name="_DeleteMessage" model="m"/>
+                    }
+                }
+            </div>
+            <hr>
+            
+            if(m.CommentsForMessage.Count>0)
+            {
+                <p class="pl-3 font-weight-bold">Comment:</p>
+                foreach(Comment c in m.CommentsForMessage)
+                {
+                    <div class="pl-5 font-weight-bold">
+                        <a class="text-primary" style="cursor: pointer;" onclick="showModal('/userdetail/@c.Creator.UserId', '@c.Creator.Name')">@c.Creator.Name</a> - <span class="text-secondary">@c.CreatedAt</span>
+
+                        <div style="margin-left: 15px; vertical-align:top;" class="d-inline">
+                        @{
+                            if(c.UserLikedThisComment.Any(l=>l.UserWhoLiked==ViewBag.curuser))
+                            {
+                                    <a class="text-danger" style="cursor: pointer;" onclick="likeorunlike('unlikecomment/@c.CommentId')"><i title="Unlike" class="fas fa-thumbs-up"></i> </a>
+                            }else{
+                                    <a class="text-secondary" style="cursor: pointer;" onclick="likeorunlike('likecomment/@c.CommentId')"><i title="Like" class="far fa-thumbs-up"></i> </a>
+                            }
+                        }
+                            <a style="cursor:pointer; text-decoration: none;" class="text-dark font-weight-normal" onclick="showModal('/userslikedcomment/@c.CommentId', 'Users like this comment')">@c.UserLikedThisComment.Count</a>
+                        </div>
+
+                    @{
+
+                        if(c.Creator == ViewBag.curuser)
+                        {
+                            <partial name="_DeleteComment" model="c"/>
+                        }
+                    }
+                    </div>
+                    <div class="pl-5 py-2 mb-4">
+                        @c.CommentContent
+                    </div>
+                    <hr>
+                }
+            }
+        }
+    }
+}

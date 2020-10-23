@@ -11,7 +11,6 @@ namespace MacroWeb.Models
         public DbSet<Comment> Comments { get; set; }
         // many to many tables
         public DbSet<Connection> Connections {get; set;}
-        public DbSet<Retweet> Retweets {get; set;}
         public DbSet<LikedMessage> LikedMessages {get; set;}
         public DbSet<LikedComment> LikedComments {get; set;}
     }

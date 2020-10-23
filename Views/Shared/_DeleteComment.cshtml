@@ -1,0 +1,8 @@
+@model MacroWeb.Models.Comment
+
+<form method="POST" asp-action="DelMes" style="display: inline-block; vertical-align:top;" asp-controller="Message" onsubmit="return del(this, 'comment');">
+    <input asp-for="CommentId" type="hidden" value="@Model.CommentId">
+
+    <button title="Delete Comment" style="outline:none; color:gray; border: none; background-color: transparent;" type="submit" class="col" ><i style="cursor: pointer;" class="fas fa-trash-alt"></i></button>
+
+</form>
