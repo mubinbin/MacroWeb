@@ -17,12 +17,17 @@
                 </div>
                 <div class="pl-3 py-2">@m.MessageContent</div>
                 @* retweet part message *@
-                <div style="font-size: 0.8 rem;" class="ml-2 pl-3 font-weight-bold">
-                    <a class="text-primary" style="cursor: pointer;" onclick="showModal('/userdetail/@m.Center.Creator.UserId', '@m.Center.Creator.Name')">@m.Center.Creator.Name</a> - <span class="text-secondary">@m.Center.UpdatedAt</span>
-                </div>
-                <div style="font-size: 0.8 rem;" class="ml-2 pl-3 py-2">@m.Center.MessageContent</div>
+                if(m.CenterId!=null)
+                {
+                    <div style="font-size: 1 rem;" class="ml-2 pl-3 font-weight-bold">
+                        <a class="text-primary" style="cursor: pointer;" onclick="showModal('/userdetail/@m.Center.Creator.UserId', '@m.Center.Creator.Name')">@m.Center.Creator.Name</a> - <span class="text-secondary">@m.Center.UpdatedAt</span>
+                    </div>
+                    <div style="font-size: 1 rem;" class="ml-2 pl-3 py-2">@m.Center.MessageContent</div>
+                }else{
+                    <div style="font-size: 1 rem;" class="ml-2 pl-3 py-2">Original post has been deleted!</div>
+                }
             }
-            <div class="my-4 row col-sm-5">
+            <div class="my-4 row pl-3">
                 <span class="col">
                 @{  
                     @* like *@
@@ -33,14 +38,14 @@
                             <a class="text-secondary" style="cursor: pointer;" onclick="likeorunlike('likemessage/@m.MessageId')"><i title="Like" class="far fa-thumbs-up"></i> </a>
                     }
                 }
-                    <a style="cursor:pointer; text-decoration: none;" class="text-dark" onclick="showModal('/userslikedmessage/@m.MessageId', 'Users like this message')">@m.UsersLikedThisMessage.Count</a>
+                    <a style="cursor:pointer;" onclick="showModal('/userslikedmessage/@m.MessageId', 'Users like this message')" class="text-dark">@m.UsersLikedThisMessage.Count</a>
                 </span>
 
                 @* comment *@
                 <a id="new-comment" class="col text-success" onclick="showModal('/newcommentpartial/@m.MessageId', 'New Comment')"><i style="cursor: pointer;" title="Reply" class="fa fa-comment"></i> <span class="text-dark">@m.CommentsForMessage.Count</span></a>
 
                 @* spiral(retweet) *@
-                <a class="col text-success" onclick="showModal('/spiralpartial/@m.MessageId', 'Retweeting below post:')"><i style="cursor: pointer;" title="Retweet" class="fas fa-broadcast-tower"></i> <span class="text-dark">@m.Spirals.Count</span></a>
+                <a class="col text-warning" onclick="showModal('/spiralpartial/@m.MessageId', 'Retweeting below post:')"><i style="cursor: pointer;" title="Retweet" class="fas fa-broadcast-tower"></i> <span class="text-dark">@m.Spirals.Count</span></a>
 
                 @{
                     @* edit and detele *@
@@ -82,7 +87,7 @@
                         }
                     }
                     </div>
-                    <div class="pl-5 py-2 mb-4">
+                    <div class="pl-5 py-2 mb-4 text-secondary text-muted">
                         @c.CommentContent
                     </div>
                     <hr>

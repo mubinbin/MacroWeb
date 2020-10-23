@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-controller="Home" asp-action="Index"><i class="lab la-slack"></i> MacroWeb</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -21,13 +21,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse align-content-center">
                     <ul class="navbar-nav flex-grow-1 nav-fill">
                         <li class="nav-item">
-                            <span class="nav-link text-dark"><a onclick="showModal('/userdetail/@ViewBag.curuser.UserId', 'Hello!')"><i style="cursor: pointer;" title="Profile" class="fas fa-user"></i></a></span> 
+                            <span class="nav-link"><a onclick="showModal('/userdetail/@ViewBag.curuser.UserId', 'Hello!')"><i style="cursor: pointer;" title="Profile" class="fas fa-user text-light"></i></a></span> 
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Wall"><i title="Homepage" class="fas fa-home"></i></a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Wall"><i style="color: #e0a2ff;" title="Homepage" class="fas fa-home"></i></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-danger" asp-controller="Home" asp-action="Logout"><i title="Log Out" class="fas fa-power-off"></i></a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Logout"><i style="color: #ffb2b2;" title="Log Out" class="fas fa-power-off"></i></a>
                         </li>
                     </ul>
                 </div>
@@ -40,7 +40,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-light bg-dark box-shadow">
         <div class="container">
             &copy; 2020 - MacroWeb
         </div>

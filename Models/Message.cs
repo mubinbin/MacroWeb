@@ -45,4 +45,14 @@ namespace MacroWeb.Models
         [BindProperty]
         public Message new_message {get; set;}
     }
+
+//     class Context : DbContext
+// {
+//     public Context(DbContextOptions dbContextOptions) : base(dbContextOptions)
+//     {}
+
+//     public DbSet<ArticleComment> Comments { get; set; }
+
+    
+// }
 }

@@ -8,6 +8,14 @@ namespace MacroWeb.Models
         // the "Monsters" table name will come from the DbSet variable name
         public DbSet<User> Users { get; set; }
         public DbSet<Message> Messages { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Message>()
+                .HasOne(p => p.Center)
+                .WithMany(p=>p.Spirals)
+                .OnDelete(DeleteBehavior.SetNull);
+        }
         public DbSet<Comment> Comments { get; set; }
         // many to many tables
         public DbSet<Connection> Connections {get; set;}
