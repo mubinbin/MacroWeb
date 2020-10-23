@@ -5,14 +5,27 @@
     {   
         if(CurUser.UsersFollowed.Any(u=>u.UserFollowed==m.Creator) ||CurUser == m.Creator)
         {
-
-            <div class="pl-3 font-weight-bold">
-                <a class="text-primary" style="cursor: pointer;" onclick="showModal('/userdetail/@m.Creator.UserId', '@m.Creator.Name')">@m.Creator.Name</a> - <span class="text-secondary">@m.UpdatedAt</span>
-            </div>
-            <div class="pl-3 py-2">@m.MessageContent</div>
-            <div class="my-4 row col-sm-3">
+            if(!m.IsSpiral)
+            {
+                <div class="pl-3 font-weight-bold">
+                    <a class="text-primary" style="cursor: pointer;" onclick="showModal('/userdetail/@m.Creator.UserId', '@m.Creator.Name')">@m.Creator.Name</a> - <span class="text-secondary">@m.UpdatedAt</span>
+                </div>
+                <div class="pl-3 py-2">@m.MessageContent</div>
+            }else{
+                <div class="pl-3 font-weight-bold">
+                    <a class="text-primary" style="cursor: pointer;" onclick="showModal('/userdetail/@m.Creator.UserId', '@m.Creator.Name')">@m.Creator.Name</a> - <span class="text-secondary">@m.UpdatedAt</span>
+                </div>
+                <div class="pl-3 py-2">@m.MessageContent</div>
+                @* retweet part message *@
+                <div style="font-size: 0.8 rem;" class="ml-2 pl-3 font-weight-bold">
+                    <a class="text-primary" style="cursor: pointer;" onclick="showModal('/userdetail/@m.Center.Creator.UserId', '@m.Center.Creator.Name')">@m.Center.Creator.Name</a> - <span class="text-secondary">@m.Center.UpdatedAt</span>
+                </div>
+                <div style="font-size: 0.8 rem;" class="ml-2 pl-3 py-2">@m.Center.MessageContent</div>
+            }
+            <div class="my-4 row col-sm-5">
                 <span class="col">
-                @{
+                @{  
+                    @* like *@
                     if(m.UsersLikedThisMessage.Any(l=>l.UserWhoLiked==ViewBag.curuser))
                     {
                             <a class="text-danger" style="cursor: pointer;" onclick="likeorunlike('unlikemessage/@m.MessageId')"><i title="Unlike" class="fas fa-thumbs-up"></i> </a>
@@ -23,10 +36,14 @@
                     <a style="cursor:pointer; text-decoration: none;" class="text-dark" onclick="showModal('/userslikedmessage/@m.MessageId', 'Users like this message')">@m.UsersLikedThisMessage.Count</a>
                 </span>
 
+                @* comment *@
+                <a id="new-comment" class="col text-success" onclick="showModal('/newcommentpartial/@m.MessageId', 'New Comment')"><i style="cursor: pointer;" title="Reply" class="fa fa-comment"></i> <span class="text-dark">@m.CommentsForMessage.Count</span></a>
 
+                @* spiral(retweet) *@
+                <a class="col text-success" onclick="showModal('/spiralpartial/@m.MessageId', 'Retweeting below post:')"><i style="cursor: pointer;" title="Retweet" class="fas fa-broadcast-tower"></i> <span class="text-dark">@m.Spirals.Count</span></a>
 
-                <a id="new-comment" class="col text-success" onclick="showModal('/newcommentpartial/@m.MessageId', 'New Comment')"><i style="cursor: pointer;" title="Reply" class="fa fa-comment"></i></a>
                 @{
+                    @* edit and detele *@
                     if(m.Creator == ViewBag.curuser)
                     {
                         <a id="edit-message" class="col text-info" onclick="showModal('/editmessagepartial/@m.MessageId', 'Edit Message')"><i style="cursor: pointer;" title="Edit Message" class="fas fa-pencil-alt"></i></a>

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MacroWeb.Models
 { 
@@ -50,7 +51,8 @@ namespace MacroWeb.Models
         public List<LikedMessage> LikedMessages {get; set;}
         public List<LikedComment> LikedComments {get; set;}
 
-        
-
+        [BindProperty]
+        [NotMapped]
+        public List<int> UsersAreChecked {get; set;}
     }
 }

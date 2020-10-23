@@ -1,0 +1,15 @@
+@{
+    Layout=null;
+}
+<form method="POST" asp-controller="Home" asp-action="FollowMultiple">
+    @{
+        foreach(User u in ViewBag.allusers)
+        {
+            <div style="margin:0 15px 0 15px; cursor: pointer;">
+                <a style="font-size:1.4rem;" onclick="showModal('/userdetail/@u.UserId', '@u.Name')"><i title="Profile" class="text-dark fas fa-user"></i> @u.Name</a>
+                <input name="UsersAreChecked" type="checkbox" value="@u.UserId">
+            </div>
+        }
+    }
+    <button class="btn btn-primary btn-sm d-block mt-2">Follow</button>
+</form>

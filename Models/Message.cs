@@ -34,6 +34,7 @@ namespace MacroWeb.Models
 
         // one to many self retweet
         public int? CenterId {get; set;}
+        public bool IsSpiral {get; set;} = false;
 
         [ForeignKey("CenterId")]
         public virtual Message Center {get; set;}

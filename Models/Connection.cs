@@ -6,7 +6,7 @@ namespace MacroWeb.Models
     {
         [Key]
         public int ConnectionId { get; set; }
-
+        
         public int FollowerId { get; set; }
         public User Follower { get; set; }
 

@@ -29,6 +29,7 @@ mespost = form =>
         contentType: false,
         processData: false,
         success: function(response){
+            console.log(response.renderPage);
             if(!response.successful)
             {
                 $("#form-modal .modal-body").html(response.renderPage);
@@ -39,6 +40,9 @@ mespost = form =>
                 $('#form-modal .modal-title').html('');
                 $('#form-modal').modal('hide');
             }
+        },
+        error: function(err){
+            console.log(err);
         }
     });
 

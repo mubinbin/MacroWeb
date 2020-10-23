@@ -15,13 +15,22 @@
             .Include(m=>m.Creator)
             .Include(m=>m.UsersLikedThisMessage)
             .ThenInclude(lm=>lm.UserWhoLiked)
-            
+
+            .Include(m=>m.Spirals)
+            .Include(m=>m.Center)
+
             .OrderByDescending(m=>m.UpdatedAt)
             .ToList();
 }
-<a style="position:fixed; bottom:100px; right: 100px; " class="btn btn-success btn-sm text-white" onclick="showModal('/newmessagepartial', 'New Message')"><i class="fa fa-plus"></i> New Message</a>
 
-
+<div style="position:fixed; bottom:100px; right: 100px; ">
+    <div >
+        <a  class="btn btn-success btn-sm text-white" onclick="showModal('/newmessagepartial', 'New Message')"><i class="fa fa-plus"></i> New Message</a>
+    </div>
+    <div class="mt-2">
+        <a class="btn btn-info btn-sm text-white" onclick="showModal('/allusers', 'All Users')">Unfollowed Users</a>
+    </div>
+</div>
 
 <div style="padding-top:30px; height: 80%; overflow: auto;" id="show-message">
     <partial name="_ShowMessage" model="allmessages"/>

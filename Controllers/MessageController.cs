@@ -46,6 +46,8 @@ namespace MacroWeb.Controllers
             .ThenInclude(c=>c.UserFollowed)
             .FirstOrDefault(u=>u.UserId == userid);
 
+            ViewBag.allusers = _context.Users.ToList();
+
             if(ModelState.IsValid)
             {
                 _context.Messages.Add(NewMessage);
@@ -63,7 +65,10 @@ namespace MacroWeb.Controllers
                 .Include(m=>m.Creator)
                 .Include(m=>m.UsersLikedThisMessage)
                 .ThenInclude(lm=>lm.UserWhoLiked)
-
+                
+                .Include(m=>m.Spirals)
+                .Include(m=>m.Center)
+            
                 .OrderByDescending(m=>m.UpdatedAt)
                 .ToList());
                 
@@ -142,6 +147,9 @@ namespace MacroWeb.Controllers
                     .Include(m=>m.UsersLikedThisMessage)
                     .ThenInclude(lm=>lm.UserWhoLiked)
                     
+                    .Include(m=>m.Spirals)
+                    .Include(m=>m.Center)
+                    
                     .OrderByDescending(m=>m.UpdatedAt)
                     .ToList());
                     
@@ -178,6 +186,8 @@ namespace MacroWeb.Controllers
             .Include(u=>u.UsersFollowed)
             .ThenInclude(c=>c.UserFollowed)
             .FirstOrDefault(u=>u.UserId == userid);
+
+            ViewBag.allusers = _context.Users.ToList();
             
             if(MessageId != 0)
             {
@@ -205,6 +215,9 @@ namespace MacroWeb.Controllers
             .Include(m=>m.UsersLikedThisMessage)
             .ThenInclude(lm=>lm.UserWhoLiked)
             
+            .Include(m=>m.Spirals)
+            .Include(m=>m.Center)
+            
             .OrderByDescending(m=>m.UpdatedAt)
             .ToList());
 
@@ -227,6 +240,7 @@ namespace MacroWeb.Controllers
             .Include(u=>u.UsersFollowed)
             .ThenInclude(c=>c.UserFollowed)
             .FirstOrDefault(u=>u.UserId == userid);
+            ViewBag.allusers = _context.Users.ToList();
 
             LikedMessage NewLike = new LikedMessage();
             NewLike.UserId = userid;
@@ -247,6 +261,9 @@ namespace MacroWeb.Controllers
             .Include(m=>m.UsersLikedThisMessage)
             .ThenInclude(lm=>lm.UserWhoLiked)
             
+            .Include(m=>m.Spirals)
+            .Include(m=>m.Center)
+            
             .OrderByDescending(m=>m.UpdatedAt)
             .ToList());
 
@@ -263,6 +280,7 @@ namespace MacroWeb.Controllers
             .Include(u=>u.UsersFollowed)
             .ThenInclude(c=>c.UserFollowed)
             .FirstOrDefault(u=>u.UserId == userid);
+            ViewBag.allusers = _context.Users.ToList();
 
             LikedMessage ToDelete = _context.LikedMessages
             .FirstOrDefault(l=>l.UserId==userid && l.MessageId==id);
@@ -282,6 +300,9 @@ namespace MacroWeb.Controllers
             .Include(m=>m.UsersLikedThisMessage)
             .ThenInclude(lm=>lm.UserWhoLiked)
             
+            .Include(m=>m.Spirals)
+            .Include(m=>m.Center)
+            
             .OrderByDescending(m=>m.UpdatedAt)
             .ToList());
 
@@ -298,6 +319,7 @@ namespace MacroWeb.Controllers
             .Include(u=>u.UsersFollowed)
             .ThenInclude(c=>c.UserFollowed)
             .FirstOrDefault(u=>u.UserId == userid);
+            ViewBag.allusers = _context.Users.ToList();
 
             ViewBag.ThisMessage = _context.Messages
             .Include(m=>m.UsersLikedThisMessage)
@@ -307,30 +329,86 @@ namespace MacroWeb.Controllers
             return PartialView("_LikedMessageUsers");
         }
 
+        // retweet
+        [HttpGet("spiralpartial/{MessageId}")]
+        public IActionResult Spiral(int MessageId)
+        {   
+            if(HttpContext.Session.GetInt32("UserId")!=null)
+            {
+                int userid = (int)HttpContext.Session.GetInt32("UserId");
 
+                ViewBag.curuser = _context.Users
+                .Include(u=>u.UsersFollowed)
+                .ThenInclude(c=>c.UserFollowed)
+                .FirstOrDefault(u=>u.UserId == userid);
+                ViewBag.curMessage = _context.Messages
+                .FirstOrDefault(m=>m.MessageId==MessageId);
 
+                return PartialView("_SpiralMessage");
+            }else{
+                return RedirectToAction("Index","Home");
+            }
+        }
 
+        [ValidateAntiForgeryToken]
+        [HttpPost("processspiral")]
+        public IActionResult ProcessSpiral(string SpiralContent, int UserId, int CenterId, bool IsSpiral)
+        {
+            Console.WriteLine(SpiralContent);
+            int userid = (int)HttpContext.Session.GetInt32("UserId");
 
+            ViewBag.curuser = _context.Users
+            .Include(u=>u.UsersFollowed)
+            .ThenInclude(c=>c.UserFollowed)
+            .FirstOrDefault(u=>u.UserId == userid);
+            
+            if(SpiralContent.Length == 0)
+            {
+                SpiralContent = "Retweet Post";
+            }
+            Message NewSpiral = new Message()
+            {
+                MessageContent = SpiralContent,
+                UserId = UserId,
+                CenterId = CenterId,
+                IsSpiral = IsSpiral
+            };
+            
 
+            _context.Messages.Add(NewSpiral);
+            _context.SaveChanges();
 
+            var html = Helper.RenderRazorViewToString(this, "_ShowMessage", _context.Messages
+            .Include(m=>m.CommentsForMessage)
+            .ThenInclude(c=>c.Creator)
 
+            .Include(m=>m.CommentsForMessage)
+            .ThenInclude(c=>c.UserLikedThisComment)
+            .ThenInclude(lc=>lc.UserWhoLiked)
 
+            .Include(m=>m.Creator)
+            .Include(m=>m.UsersLikedThisMessage)
+            .ThenInclude(lm=>lm.UserWhoLiked)
 
+            .Include(m=>m.Spirals)
+            .Include(m=>m.Center)
+            
+            .OrderByDescending(m=>m.UpdatedAt)
+            .ToList());
+                
+            var returnedJson = new
+            {
+                successful = true,
+                renderPage = html
+            };
 
-
-
-
-
-
-
-
-
+            return Json(returnedJson);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
     }
 }

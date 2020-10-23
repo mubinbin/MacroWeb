@@ -127,15 +127,6 @@ namespace MacroWeb.Controllers
 
                 ViewBag.allusers = _context.Users.ToList();
 
-                List<Message> allmessages = _context.Messages
-                .Include(m=>m.CommentsForMessage)
-                .ThenInclude(c=>c.Creator)
-                .Include(m=>m.Creator)
-                .Include(m=>m.UsersLikedThisMessage)
-                .ThenInclude(l=>l.UserWhoLiked)
-                .OrderByDescending(m=>m.UpdatedAt)
-                .ToList();
-
                 return View("Wall", _context);
             }else{
                 return RedirectToAction("Index");
@@ -234,6 +225,8 @@ namespace MacroWeb.Controllers
             if(HttpContext.Session.GetInt32("UserId")!=null)
             {
                 int userid = (int)HttpContext.Session.GetInt32("UserId");
+                ViewBag.curuser = _context.Users
+                .FirstOrDefault(u=>u.UserId == userid);
 
                 return PartialView("_EditProfile");
             }else{
@@ -276,6 +269,48 @@ namespace MacroWeb.Controllers
                 return View("_EditProfile");
             }
             
+        }
+
+        [HttpGet("allusers")]
+        public IActionResult AllUsers()
+        {
+            if(HttpContext.Session.GetInt32("UserId")!=null)
+            {
+                int userid = (int)HttpContext.Session.GetInt32("UserId");
+
+                ViewBag.curuser = _context.Users
+                .Include(u=>u.UsersFollowed)
+                .ThenInclude(c=>c.UserFollowed)
+                .FirstOrDefault(u=>u.UserId == userid);
+
+                ViewBag.allusers = _context.Users
+                .Include(u=>u.Followers)
+                .ThenInclude(c=>c.Follower)
+                .Where(u=> u.UserId!=userid && !u.Followers.Any(c=>c.Follower.UserId == userid  ))
+                .ToList();
+
+                return PartialView("_AllUsers");
+            }else{
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost("followmultiple")]
+        public RedirectToActionResult FollowMultiple(List<int> UsersAreChecked)
+        {
+            int userid = (int)HttpContext.Session.GetInt32("UserId");
+
+            foreach(int id in UsersAreChecked)
+            {
+                Connection NewConnection = new Connection()
+                {
+                    UserFollowedId = id,
+                    FollowerId = userid
+                };
+                _context.Connections.Add(NewConnection);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Wall");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

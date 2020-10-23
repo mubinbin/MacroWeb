@@ -21,7 +21,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse align-content-center">
                     <ul class="navbar-nav flex-grow-1 nav-fill">
                         <li class="nav-item">
-                            <span class="nav-link"><a onclick="showModal('/userdetail/@ViewBag.curuser.UserId', 'Hello!')"><i title="Profile" class="fas fa-user"></i></a></span> 
+                            <span class="nav-link text-dark"><a onclick="showModal('/userdetail/@ViewBag.curuser.UserId', 'Hello!')"><i style="cursor: pointer;" title="Profile" class="fas fa-user"></i></a></span> 
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Wall"><i title="Homepage" class="fas fa-home"></i></a>
@@ -42,7 +42,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - MacroWeb - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - MacroWeb
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

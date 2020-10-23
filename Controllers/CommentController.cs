@@ -31,6 +31,7 @@ namespace MacroWeb.Controllers
             .Include(u=>u.UsersFollowed)
             .ThenInclude(c=>c.UserFollowed)
             .FirstOrDefault(u=>u.UserId == userid);
+            ViewBag.allusers = _context.Users.ToList();
             ViewBag.curmessage = _context.Messages
             .FirstOrDefault(m=>m.MessageId==MessageId);
 
@@ -67,6 +68,9 @@ namespace MacroWeb.Controllers
                 .Include(m=>m.Creator)
                 .Include(m=>m.UsersLikedThisMessage)
                 .ThenInclude(lm=>lm.UserWhoLiked)
+                
+                .Include(m=>m.Spirals)
+                .Include(m=>m.Center)
                 
                 .OrderByDescending(m=>m.UpdatedAt)
                 .ToList());
@@ -122,6 +126,9 @@ namespace MacroWeb.Controllers
             .Include(m=>m.UsersLikedThisMessage)
             .ThenInclude(lm=>lm.UserWhoLiked)
             
+            .Include(m=>m.Spirals)
+            .Include(m=>m.Center)
+            
             .OrderByDescending(m=>m.UpdatedAt)
             .ToList());
 
@@ -157,6 +164,9 @@ namespace MacroWeb.Controllers
             .Include(m=>m.UsersLikedThisMessage)
             .ThenInclude(lm=>lm.UserWhoLiked)
             
+            .Include(m=>m.Spirals)
+            .Include(m=>m.Center)
+            
             .OrderByDescending(m=>m.UpdatedAt)
             .ToList());
 
@@ -180,47 +190,6 @@ namespace MacroWeb.Controllers
             
             return PartialView("_LikedCommentUsers");
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

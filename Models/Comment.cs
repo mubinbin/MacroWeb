@@ -17,7 +17,6 @@ namespace MacroWeb.Models
         public int MessageId {get; set;}
         public Message OfMessage {get; set;}
 
-
         [Required(ErrorMessage="This field is required")]
         [MinLength(5, ErrorMessage="{0} must be at least {1} characters")]
         public string CommentContent {get; set;}

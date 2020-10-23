@@ -14392,6 +14392,11 @@
   "RootNamespace": "MacroWeb",
   "Documents": [
     {
+      "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Message\\_SpiralMessage.cshtml",
+      "TargetPath": "Views\\Message\\_SpiralMessage.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\_ViewStart.cshtml",
       "TargetPath": "Views\\_ViewStart.cshtml",
       "FileKind": "mvc"
@@ -14474,6 +14479,11 @@
     {
       "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Comment\\_LikedCommentUsers.cshtml",
       "TargetPath": "Views\\Comment\\_LikedCommentUsers.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "d:\\Dojo_Assignments\\C#\\ORM\\MacroWeb\\Views\\Home\\_AllUsers.cshtml",
+      "TargetPath": "Views\\Home\\_AllUsers.cshtml",
       "FileKind": "mvc"
     },
     {
