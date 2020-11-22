@@ -5,12 +5,27 @@
     <p><span class="text-danger" asp-validation-for="LPassword"></span></p>
     <div class="form-group">
         <label asp-for="LEmail"></label>
-        <input class="form-control" asp-for="LEmail" value="12@email.com">
+        <input class="form-control" asp-for="LEmail">
     </div>
 
     <div class="form-group">
         <label asp-for="LPassword"></label>
-        <input class="form-control" asp-for="LPassword" value="11111111">
+        <input class="form-control" asp-for="LPassword">
     </div>
     <button type="submit" class="btn btn-primary">Log in</button>
 </form>
+
+<p class="mt-5">Try it out with below test accounts!</p>
+<div class="d-flex">
+    <div class="col">
+        <p>Account 1 :</p>
+        <p>Email : 12@email.com</p>
+        <p>Password: 11111111</p>
+    </div>
+
+    <div class="col">
+        <p>Account 2 :</p>
+        <p>Email : 123@email.com</p>
+        <p>Password: 11111111</p>
+    </div>
+</div>
