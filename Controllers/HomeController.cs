@@ -43,7 +43,8 @@ namespace MacroWeb.Controllers
                 if(ImageFile != null)
                 {
                     //Save image to wwwroot/image
-                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    // string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string wwwRootPath = "./wwwroot";
                     string fileName = Path.GetFileNameWithoutExtension(ImageFile.FileName);
                     string extension = Path.GetExtension(ImageFile.FileName);
                     
@@ -249,7 +250,9 @@ namespace MacroWeb.Controllers
                 if(ImageFile != null)
                 {
                     //Save image to wwwroot/image
-                    string wwwRootPath = _hostEnvironment.WebRootPath;
+                    // string wwwRootPath = _hostEnvironment.WebRootPath;
+                    string wwwRootPath = "./wwwroot";
+
                     string fileName = Path.GetFileNameWithoutExtension(ImageFile.FileName);
                     string extension = Path.GetExtension(ImageFile.FileName);
                     
