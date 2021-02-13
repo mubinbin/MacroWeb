@@ -24,7 +24,7 @@ namespace MacroWeb
                         .UseStartup<Startup>()
                         // this is needed when dockerize the app 
                         // let the app runs at port 5000
-                        .UseUrls("http://*:5000/");
+                        .UseUrls("http://localhost:5000/");
                 });
     }
 }
