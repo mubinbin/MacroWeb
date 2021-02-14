@@ -8,9 +8,8 @@ services:
       - 3307:3306
     environment:
       MYSQL_DATABASE: macrowebdb
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORD: dbuserpassword
     volumes:
       - macroweb-data:/var/lib/mysql
     networks:
